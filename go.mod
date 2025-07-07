@@ -1,4 +1,4 @@
-module arox-pkg
+module github.com/Nariett/arox-pkg
 
 go 1.23.3
 
