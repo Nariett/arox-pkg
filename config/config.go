@@ -7,6 +7,11 @@ import (
 	"os"
 )
 
+const (
+	defaultDBPort   = "5432"
+	defautlHttpPort = "8080"
+)
+
 func New() (*Config, error) {
 	if err := godotenv.Load(".env"); err != nil {
 		log.Fatalf("Error loading .env file %v", err)
