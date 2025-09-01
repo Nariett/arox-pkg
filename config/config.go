@@ -9,7 +9,7 @@ import (
 
 const (
 	defaultDBPort   = "5432"
-	defautlHttpPort = "8080"
+	defaultHttpPort = "8080"
 )
 
 func New() (*Config, error) {
@@ -20,15 +20,19 @@ func New() (*Config, error) {
 	}
 
 	return &Config{
-		User:     os.Getenv("USER"),
-		Password: os.Getenv("PASSWORD"),
-		DBName:   os.Getenv("DBNAME"),
-		SSLMode:  os.Getenv("SSLMODE"),
-		Port:     os.Getenv("PORT"),
-		Host:     os.Getenv("HOST"),
+		DBUser:       os.Getenv("DB_USER"),
+		DBPassword:   os.Getenv("DB_PASSWORD"),
+		DBName:       os.Getenv("DB_NAME"),
+		SSLMode:      os.Getenv("DB_SSLMODE"),
+		DBPort:       os.Getenv("DB_PORT"),
+		Port:         os.Getenv("PORT"),
+		Host:         os.Getenv("HOST"),
+		Protocol:     os.Getenv("PROTOCOL"),
+		LPort:        os.Getenv("LPORT"),
+		ProductsPort: os.Getenv("PRODUCTS_PORT"),
 	}, nil
 }
 
 func (cfg *Config) BuildConnStr() string {
-	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", cfg.Host, cfg.Port, cfg.User, cfg.Password, cfg.DBName, cfg.SSLMode)
+	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", cfg.Host, cfg.DBPort, cfg.DBUser, cfg.DBPassword, cfg.DBName, cfg.SSLMode)
 }

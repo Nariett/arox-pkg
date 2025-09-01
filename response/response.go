@@ -30,10 +30,10 @@ func Ok(w http.ResponseWriter, data interface{}) {
 	writeResponse(w, http.StatusOK, data, "")
 }
 
-func NoContent(w http.ResponseWriter, data interface{}) {
-	writeResponse(w, http.StatusNoContent, data, "")
+func NoContent(w http.ResponseWriter) {
+	writeResponse(w, http.StatusNoContent, nil, "")
 }
 
-func NotFound(w http.ResponseWriter, data interface{}, errMsg string) {
-	writeResponse(w, http.StatusNotFound, data, errMsg)
+func NotFound(w http.ResponseWriter, errMsg string) {
+	writeResponse(w, http.StatusNotFound, nil, errMsg)
 }
