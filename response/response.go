@@ -17,7 +17,10 @@ func writeResponse(w http.ResponseWriter, status int, data interface{}, errMsg s
 		errResponse := Error{
 			Message: errMsg,
 		}
-		json.NewEncoder(w).Encode(errResponse)
+		err := json.NewEncoder(w).Encode(errResponse)
+		if err != nil {
+			return
+		}
 		return
 	}
 
