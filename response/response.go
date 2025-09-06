@@ -37,3 +37,7 @@ func NoContent(w http.ResponseWriter) {
 func NotFound(w http.ResponseWriter, errMsg string) {
 	writeResponse(w, http.StatusNotFound, nil, errMsg)
 }
+
+func BadRequest(w http.ResponseWriter, errMsg string) {
+	writeResponse(w, http.StatusBadRequest, nil, errMsg)
+}
