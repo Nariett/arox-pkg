@@ -16,6 +16,15 @@ service ProductsService{
   rpc ListCategories (google.protobuf.Empty) returns (ListCategoriesResponse);
 }
 
+message Size{
+  string size = 1;
+  int64 count = 2;
+}
+
+message Sizes{
+  repeated Size sizes = 1;
+}
+
 message Product{
   int64 id = 1;
   string brand = 2;
@@ -23,7 +32,7 @@ message Product{
   int64 category_id = 4;
   int64 price = 5;
   string description = 6;
-  string sizes = 7;
+  Sizes sizes = 7;
   bool is_active = 8;
   google.protobuf.Timestamp created_at = 9;
 }
