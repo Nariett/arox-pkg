@@ -4,7 +4,7 @@
 // - protoc             v5.29.0
 // source: products.proto
 
-package __
+package products
 
 import (
 	context "context"
@@ -27,7 +27,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductsServiceClient interface {
-	ListProducts(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Product, error)
+	ListProducts(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Products, error)
 }
 
 type productsServiceClient struct {
@@ -38,9 +38,9 @@ func NewProductsServiceClient(cc grpc.ClientConnInterface) ProductsServiceClient
 	return &productsServiceClient{cc}
 }
 
-func (c *productsServiceClient) ListProducts(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Product, error) {
+func (c *productsServiceClient) ListProducts(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Products, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Product)
+	out := new(Products)
 	err := c.cc.Invoke(ctx, ProductsService_ListProducts_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -52,7 +52,7 @@ func (c *productsServiceClient) ListProducts(ctx context.Context, in *emptypb.Em
 // All implementations must embed UnimplementedProductsServiceServer
 // for forward compatibility.
 type ProductsServiceServer interface {
-	ListProducts(context.Context, *emptypb.Empty) (*Product, error)
+	ListProducts(context.Context, *emptypb.Empty) (*Products, error)
 	mustEmbedUnimplementedProductsServiceServer()
 }
 
@@ -63,7 +63,7 @@ type ProductsServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedProductsServiceServer struct{}
 
-func (UnimplementedProductsServiceServer) ListProducts(context.Context, *emptypb.Empty) (*Product, error) {
+func (UnimplementedProductsServiceServer) ListProducts(context.Context, *emptypb.Empty) (*Products, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProducts not implemented")
 }
 func (UnimplementedProductsServiceServer) mustEmbedUnimplementedProductsServiceServer() {}
