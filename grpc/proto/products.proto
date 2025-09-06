@@ -8,14 +8,19 @@ import "google/protobuf/timestamp.proto";
 option go_package = "grpc/pb/products;products";
 
 service ProductsService{
-  rpc ListProducts (google.protobuf.Empty) returns (Products);
+  //products
+  rpc GetProduct (GetProductRequest) returns (GetProductResponse);
+  rpc ListProducts (google.protobuf.Empty) returns (ListProductsResponse);
+
+  //categories
+  rpc ListCategories (google.protobuf.Empty) returns (ListCategoriesResponse);
 }
 
 message Product{
   int64 id = 1;
   string brand = 2;
   string name = 3;
-  int64 category = 4;
+  int64 category_id = 4;
   int64 price = 5;
   string description = 6;
   string sizes = 7;
@@ -23,6 +28,24 @@ message Product{
   google.protobuf.Timestamp created_at = 9;
 }
 
-message Products{
+message Category{
+  int64 id = 1;
+  string name = 2;
+  string slug = 3;
+}
+
+message ListProductsResponse{
   repeated Product products = 1;
+}
+
+message ListCategoriesResponse{
+  repeated Category categories = 1;
+}
+
+message GetProductRequest{
+  int64 Id = 1;
+}
+
+message GetProductResponse{
+  Product product = 1;
 }
