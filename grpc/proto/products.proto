@@ -11,20 +11,11 @@ service ProductsService{
   rpc ListProducts (google.protobuf.Empty) returns (Products);
 }
 
-enum Category{
-  CLOTHES = 0;
-  SHOES = 1;
-  ACCESSORIES = 2;
-  BAGS = 3;
-  HOMES = 4;
-  WATCHES = 5;
-}
-
 message Product{
   int64 id = 1;
   string brand = 2;
   string name = 3;
-  Category category = 4;
+  int64 category = 4;
   int64 price = 5;
   string description = 6;
   string sizes = 7;
