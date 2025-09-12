@@ -21,8 +21,12 @@ message Size{
   int64 count = 2;
 }
 
-message Sizes{
-  repeated Size sizes = 1;
+message Image{
+  int64 id = 1;
+  int64 id_product = 2;
+  string url = 3;
+  bool is_main = 4;
+  bool is_active = 5;
 }
 
 message Product{
@@ -32,9 +36,10 @@ message Product{
   int64 category_id = 4;
   int64 price = 5;
   string description = 6;
-  Sizes sizes = 7;
+  repeated Size sizes = 7;
   bool is_active = 8;
   google.protobuf.Timestamp created_at = 9;
+  repeated Image images= 10;
 }
 
 message Category{

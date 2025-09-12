@@ -75,27 +75,31 @@ func (x *Size) GetCount() int64 {
 	return 0
 }
 
-type Sizes struct {
+type Image struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Sizes         []*Size                `protobuf:"bytes,1,rep,name=sizes,proto3" json:"sizes,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	IdProduct     int64                  `protobuf:"varint,2,opt,name=id_product,json=idProduct,proto3" json:"id_product,omitempty"`
+	Url           string                 `protobuf:"bytes,3,opt,name=url,proto3" json:"url,omitempty"`
+	IsMain        bool                   `protobuf:"varint,4,opt,name=is_main,json=isMain,proto3" json:"is_main,omitempty"`
+	IsActive      bool                   `protobuf:"varint,5,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Sizes) Reset() {
-	*x = Sizes{}
+func (x *Image) Reset() {
+	*x = Image{}
 	mi := &file_products_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Sizes) String() string {
+func (x *Image) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Sizes) ProtoMessage() {}
+func (*Image) ProtoMessage() {}
 
-func (x *Sizes) ProtoReflect() protoreflect.Message {
+func (x *Image) ProtoReflect() protoreflect.Message {
 	mi := &file_products_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -107,16 +111,44 @@ func (x *Sizes) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Sizes.ProtoReflect.Descriptor instead.
-func (*Sizes) Descriptor() ([]byte, []int) {
+// Deprecated: Use Image.ProtoReflect.Descriptor instead.
+func (*Image) Descriptor() ([]byte, []int) {
 	return file_products_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Sizes) GetSizes() []*Size {
+func (x *Image) GetId() int64 {
 	if x != nil {
-		return x.Sizes
+		return x.Id
 	}
-	return nil
+	return 0
+}
+
+func (x *Image) GetIdProduct() int64 {
+	if x != nil {
+		return x.IdProduct
+	}
+	return 0
+}
+
+func (x *Image) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *Image) GetIsMain() bool {
+	if x != nil {
+		return x.IsMain
+	}
+	return false
+}
+
+func (x *Image) GetIsActive() bool {
+	if x != nil {
+		return x.IsActive
+	}
+	return false
 }
 
 type Product struct {
@@ -127,9 +159,10 @@ type Product struct {
 	CategoryId    int64                  `protobuf:"varint,4,opt,name=category_id,json=categoryId,proto3" json:"category_id,omitempty"`
 	Price         int64                  `protobuf:"varint,5,opt,name=price,proto3" json:"price,omitempty"`
 	Description   string                 `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
-	Sizes         *Sizes                 `protobuf:"bytes,7,opt,name=sizes,proto3" json:"sizes,omitempty"`
+	Sizes         []*Size                `protobuf:"bytes,7,rep,name=sizes,proto3" json:"sizes,omitempty"`
 	IsActive      bool                   `protobuf:"varint,8,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	Images        []*Image               `protobuf:"bytes,10,rep,name=images,proto3" json:"images,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -206,7 +239,7 @@ func (x *Product) GetDescription() string {
 	return ""
 }
 
-func (x *Product) GetSizes() *Sizes {
+func (x *Product) GetSizes() []*Size {
 	if x != nil {
 		return x.Sizes
 	}
@@ -223,6 +256,13 @@ func (x *Product) GetIsActive() bool {
 func (x *Product) GetCreatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *Product) GetImages() []*Image {
+	if x != nil {
+		return x.Images
 	}
 	return nil
 }
@@ -470,9 +510,14 @@ const file_products_proto_rawDesc = "" +
 	"\x0eproducts.proto\x12\bproducts\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"0\n" +
 	"\x04Size\x12\x12\n" +
 	"\x04size\x18\x01 \x01(\tR\x04size\x12\x14\n" +
-	"\x05count\x18\x02 \x01(\x03R\x05count\"-\n" +
-	"\x05Sizes\x12$\n" +
-	"\x05sizes\x18\x01 \x03(\v2\x0e.products.SizeR\x05sizes\"\x9b\x02\n" +
+	"\x05count\x18\x02 \x01(\x03R\x05count\"~\n" +
+	"\x05Image\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x1d\n" +
+	"\n" +
+	"id_product\x18\x02 \x01(\x03R\tidProduct\x12\x10\n" +
+	"\x03url\x18\x03 \x01(\tR\x03url\x12\x17\n" +
+	"\ais_main\x18\x04 \x01(\bR\x06isMain\x12\x1b\n" +
+	"\tis_active\x18\x05 \x01(\bR\bisActive\"\xc3\x02\n" +
 	"\aProduct\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x14\n" +
 	"\x05brand\x18\x02 \x01(\tR\x05brand\x12\x12\n" +
@@ -480,11 +525,13 @@ const file_products_proto_rawDesc = "" +
 	"\vcategory_id\x18\x04 \x01(\x03R\n" +
 	"categoryId\x12\x14\n" +
 	"\x05price\x18\x05 \x01(\x03R\x05price\x12 \n" +
-	"\vdescription\x18\x06 \x01(\tR\vdescription\x12%\n" +
-	"\x05sizes\x18\a \x01(\v2\x0f.products.SizesR\x05sizes\x12\x1b\n" +
+	"\vdescription\x18\x06 \x01(\tR\vdescription\x12$\n" +
+	"\x05sizes\x18\a \x03(\v2\x0e.products.SizeR\x05sizes\x12\x1b\n" +
 	"\tis_active\x18\b \x01(\bR\bisActive\x129\n" +
 	"\n" +
-	"created_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"B\n" +
+	"created_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12'\n" +
+	"\x06images\x18\n" +
+	" \x03(\v2\x0f.products.ImageR\x06images\"B\n" +
 	"\bCategory\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
@@ -520,7 +567,7 @@ func file_products_proto_rawDescGZIP() []byte {
 var file_products_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_products_proto_goTypes = []any{
 	(*Size)(nil),                   // 0: products.Size
-	(*Sizes)(nil),                  // 1: products.Sizes
+	(*Image)(nil),                  // 1: products.Image
 	(*Product)(nil),                // 2: products.Product
 	(*Category)(nil),               // 3: products.Category
 	(*ListProductsResponse)(nil),   // 4: products.ListProductsResponse
@@ -531,9 +578,9 @@ var file_products_proto_goTypes = []any{
 	(*emptypb.Empty)(nil),          // 9: google.protobuf.Empty
 }
 var file_products_proto_depIdxs = []int32{
-	0, // 0: products.Sizes.sizes:type_name -> products.Size
-	1, // 1: products.Product.sizes:type_name -> products.Sizes
-	8, // 2: products.Product.created_at:type_name -> google.protobuf.Timestamp
+	0, // 0: products.Product.sizes:type_name -> products.Size
+	8, // 1: products.Product.created_at:type_name -> google.protobuf.Timestamp
+	1, // 2: products.Product.images:type_name -> products.Image
 	2, // 3: products.ListProductsResponse.products:type_name -> products.Product
 	3, // 4: products.ListCategoriesResponse.categories:type_name -> products.Category
 	2, // 5: products.GetProductResponse.product:type_name -> products.Product
