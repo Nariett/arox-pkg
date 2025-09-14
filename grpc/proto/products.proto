@@ -13,6 +13,7 @@ service ProductsService{
   rpc ListProducts (google.protobuf.Empty) returns (ListProductsResponse);
 
   //categories
+  rpc GetCategory (GetCategoryRequest) returns (GetCategoryResponse);
   rpc ListCategories (google.protobuf.Empty) returns (ListCategoriesResponse);
 }
 
@@ -57,9 +58,17 @@ message ListCategoriesResponse{
 }
 
 message GetProductRequest{
-  int64 Id = 1;
+  int64 id = 1;
 }
 
 message GetProductResponse{
   Product product = 1;
+}
+
+message GetCategoryRequest{
+  int64 id = 1;
+}
+
+message GetCategoryResponse{
+  Category category = 1;
 }

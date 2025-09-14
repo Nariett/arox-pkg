@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	ProductsService_GetProduct_FullMethodName     = "/products.ProductsService/GetProduct"
 	ProductsService_ListProducts_FullMethodName   = "/products.ProductsService/ListProducts"
+	ProductsService_GetCategory_FullMethodName    = "/products.ProductsService/GetCategory"
 	ProductsService_ListCategories_FullMethodName = "/products.ProductsService/ListCategories"
 )
 
@@ -33,6 +34,7 @@ type ProductsServiceClient interface {
 	GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*GetProductResponse, error)
 	ListProducts(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListProductsResponse, error)
 	// categories
+	GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error)
 	ListCategories(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListCategoriesResponse, error)
 }
 
@@ -64,6 +66,16 @@ func (c *productsServiceClient) ListProducts(ctx context.Context, in *emptypb.Em
 	return out, nil
 }
 
+func (c *productsServiceClient) GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetCategoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCategoryResponse)
+	err := c.cc.Invoke(ctx, ProductsService_GetCategory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *productsServiceClient) ListCategories(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListCategoriesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListCategoriesResponse)
@@ -82,6 +94,7 @@ type ProductsServiceServer interface {
 	GetProduct(context.Context, *GetProductRequest) (*GetProductResponse, error)
 	ListProducts(context.Context, *emptypb.Empty) (*ListProductsResponse, error)
 	// categories
+	GetCategory(context.Context, *GetCategoryRequest) (*GetCategoryResponse, error)
 	ListCategories(context.Context, *emptypb.Empty) (*ListCategoriesResponse, error)
 	mustEmbedUnimplementedProductsServiceServer()
 }
@@ -98,6 +111,9 @@ func (UnimplementedProductsServiceServer) GetProduct(context.Context, *GetProduc
 }
 func (UnimplementedProductsServiceServer) ListProducts(context.Context, *emptypb.Empty) (*ListProductsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProducts not implemented")
+}
+func (UnimplementedProductsServiceServer) GetCategory(context.Context, *GetCategoryRequest) (*GetCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategory not implemented")
 }
 func (UnimplementedProductsServiceServer) ListCategories(context.Context, *emptypb.Empty) (*ListCategoriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCategories not implemented")
@@ -159,6 +175,24 @@ func _ProductsService_ListProducts_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ProductsService_GetCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductsServiceServer).GetCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ProductsService_GetCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductsServiceServer).GetCategory(ctx, req.(*GetCategoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ProductsService_ListCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
@@ -191,6 +225,10 @@ var ProductsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListProducts",
 			Handler:    _ProductsService_ListProducts_Handler,
+		},
+		{
+			MethodName: "GetCategory",
+			Handler:    _ProductsService_GetCategory_Handler,
 		},
 		{
 			MethodName: "ListCategories",
