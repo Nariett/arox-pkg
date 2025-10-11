@@ -11,4 +11,5 @@ type Config struct {
 	Protocol     string `config:"PROTOCOL"`
 	LPort        string `config:"LPORT"`
 	ProductsPort string `config:"PRODUCTS_PORT"`
+	Secret       string `config:"JWT_SECRET"`
 }

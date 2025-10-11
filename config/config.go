@@ -30,6 +30,7 @@ func New() (*Config, error) {
 		Protocol:     os.Getenv("PROTOCOL"),
 		LPort:        os.Getenv("LPORT"),
 		ProductsPort: os.Getenv("PRODUCTS_PORT"),
+		Secret:       os.Getenv("JWT_SECRET"),
 	}, nil
 }
 
