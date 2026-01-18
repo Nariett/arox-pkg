@@ -47,3 +47,7 @@ func NotFound(w http.ResponseWriter, errMsg string) {
 func BadRequest(w http.ResponseWriter, errMsg string) {
 	writeResponse(w, http.StatusBadRequest, nil, errMsg)
 }
+
+func Unauthorized(w http.ResponseWriter, errMsg string) {
+	writeResponse(w, http.StatusUnauthorized, nil, errMsg)
+}

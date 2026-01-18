@@ -12,4 +12,9 @@ type Config struct {
 	LPort        string `config:"LPORT"`
 	ProductsPort string `config:"PRODUCTS_PORT"`
 	Secret       string `config:"JWT_SECRET"`
+	MinioHost    string `config:"MINIO_HOST"`
+	MinioPort    string `config:"MINIO_PORT"`
+	MinioBucket  string `config:"MINIO_BUCKET"`
+	MinioUser    string `config:"MINIO_USER"`
+	MinioPass    string `config:"MINIO_PASS"`
 }

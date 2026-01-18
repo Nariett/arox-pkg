@@ -31,6 +31,10 @@ func New() (*Config, error) {
 		LPort:        os.Getenv("LPORT"),
 		ProductsPort: os.Getenv("PRODUCTS_PORT"),
 		Secret:       os.Getenv("JWT_SECRET"),
+		MinioHost:    os.Getenv("MINIO_HOST"),
+		MinioPort:    os.Getenv("MINIO_PORT"),
+		MinioUser:    os.Getenv("MINIO_USER"),
+		MinioPass:    os.Getenv("MINIO_PASS"),
 	}, nil
 }
 
