@@ -2,11 +2,12 @@ package middleware
 
 import (
 	"fmt"
-	"github.com/Nariett/arox-pkg/response"
-	"github.com/golang-jwt/jwt"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/Nariett/arox-pkg/response"
+	"github.com/golang-jwt/jwt"
 )
 
 func AuthMiddleware(next http.Handler, secret string) http.Handler {

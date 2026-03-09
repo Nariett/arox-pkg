@@ -2,9 +2,10 @@ package db
 
 import (
 	"fmt"
+	"log"
+
 	"github.com/Nariett/arox-pkg/config"
 	"github.com/jmoiron/sqlx"
-	"log"
 )
 
 func CreateDatabase(cfg *config.Config) error {

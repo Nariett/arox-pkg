@@ -1,47 +1,29 @@
 package db
 
 import (
+	"embed"
 	"errors"
+	"log"
+
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
+	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"github.com/jmoiron/sqlx"
-	"log"
-	"os"
-	"path/filepath"
-	"strings"
 )
 
-func findMigrationsPath() string {
-	currentDir, err := os.Getwd()
+func Migrate(db *sqlx.DB, fs *embed.FS) {
+	source, err := iofs.New(fs, "migrations")
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	for i := 0; i < 5; i++ {
-		testPath := filepath.Join(currentDir, "schema", "migrations")
-		if _, err := os.Stat(testPath); err == nil {
-			path := "file://" + testPath
-
-			path = strings.Replace(path, "\\", "/", -1)
-			return path
-		}
-		currentDir = filepath.Dir(currentDir)
-	}
-
-	log.Fatal("Migrations directory not found")
-	return ""
-}
-
-func Migrate(db *sqlx.DB) {
-	migrationsPath := findMigrationsPath()
 
 	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	m, err := migrate.NewWithDatabaseInstance(migrationsPath, "postgres", driver)
+	m, err := migrate.NewWithInstance("iofs", source, "postgres", driver)
 	if err != nil {
 		log.Fatal(err)
 	}
